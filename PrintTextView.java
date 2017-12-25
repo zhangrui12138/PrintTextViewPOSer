@@ -96,18 +96,19 @@ public class PrintTextView extends TextView {
                Indexes.add(Message.substring(TempIndex,i));
            }
            String charString=String.valueOf(Message.charAt(i));
-           IndexWidth+=BitmapUtil.getEveryWordWidth(charString,mtextSize);
+           int worderWidth=BitmapUtil.getEveryWordWidth(charString,mtextSize);
+           IndexWidth+=worderWidth;
            if(charString.equals("\n")){
                if(Indexes.size() == 0){
                    Indexes.add(Message.substring(0,i));
                    SDKLog.e(TAG,"String="+Message.substring(0,i));
                    TempIndex=i;
-                   IndexWidth=0;
+                   IndexWidth=worderWidth;
                }else {
                    Indexes.add(Message.substring(TempIndex,i));
                    SDKLog.e(TAG,"String="+Message.substring(TempIndex,i));
                    TempIndex=i;
-                   IndexWidth=0;
+                   IndexWidth=worderWidth;
                }
            }
            if(IndexWidth>PrinterConstant.PAPER_WIDTH){
@@ -115,12 +116,12 @@ public class PrintTextView extends TextView {
                  Indexes.add(Message.substring(0,i));
                  SDKLog.e(TAG,"dfg="+Message.substring(0,i));
                  TempIndex=i;
-                 IndexWidth=0;
+                 IndexWidth=worderWidth;
              }else {
                  Indexes.add(Message.substring(TempIndex,i));
                  SDKLog.e(TAG,"dfg="+Message.substring(TempIndex,i));
                  TempIndex=i;
-                 IndexWidth=0;
+                 IndexWidth=worderWidth;
              }
            }
            IndexWidth+=letterspacing;
@@ -164,9 +165,9 @@ public class PrintTextView extends TextView {
                         String worder=String.valueOf(arrays.get(j).charAt(i));
                         if(worder.equals("\n")){continue;}
                         int everyWordWidth=BitmapUtil.getEveryWordWidth(worder,mtextSize);
-                        canvas.drawText(worder, Linediedai/*i*(letterspacing+mtextSize)*/+LeftMarginser,(mtextSize)*LineNums, paint);
+                        canvas.drawText(worder, Linediedai/*i*(letterspacing+mtextSize)*/+LeftMarginser,(mtextSize+2)*LineNums, paint);
                         if(mIsLetterUnderLine){
-                            canvas.drawLine(Linediedai/*i*(letterspacing+mtextSize)*/+LeftMarginser,(mtextSize+2)*LineNums,Linediedai/*i*(letterspacing+mtextSize)*/+everyWordWidth+LeftMarginser,(mtextSize+2)*LineNums,paint);
+                            canvas.drawLine(Linediedai/*i*(letterspacing+mtextSize)*/+LeftMarginser,(mtextSize+3)*LineNums,Linediedai/*i*(letterspacing+mtextSize)*/+everyWordWidth+LeftMarginser,(mtextSize+4)*LineNums,paint);
                         }
                         Linediedai+=everyWordWidth+letterspacing;
                     }
